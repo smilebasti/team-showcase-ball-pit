@@ -13,3 +13,4 @@ The BaseCode comes from https://codepen.io/Alca/pen/gGPzYr.
 - Slow pop up large -> move to Pit small
 - Automatic generation amount of Items in Folder
 - Pit slowly growing
+- Fade over to Logo at the End (Movie aftereffects?)
