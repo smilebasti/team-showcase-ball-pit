@@ -4,31 +4,35 @@ let bounds = {
   r: 200,
   b: 200,
   l: -200,
-  strength: 0.4 };
+  strength: 0.1 };
 
 bounds.w = abs(bounds.l - bounds.r);
 bounds.h = abs(bounds.t - bounds.b);
 
+
+// On Loading first Balls start in Center with some force
 function setup() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 5; i++) {
     let c = new CircleBody();
-    c.pos.set(Vector.random2D(true, 25));
-    c.r = random(15, 20);
-    c.applyForce(Vector.random2D());
-    circles.push(c);
+    c.pos.set(Vector.random2D(true, 50));  // random starting position 250 away from center
+    c.r = 25; //random(15, 20);     //random Circle radius
+    //c.applyForce(Vector.random2D()); //intizial push
+    circles.push(c);  // don't know
   }
 }
 
+// create new circle when left mouse clicked
 window.addEventListener('click', ({ x, y }) => {
-  if (circles.length >= 500) {
+  if (circles.length >= 500) {  // more than 500 breaks
     return;
   }
   let c = new CircleBody();
-  c.r = random(15, 20);
+  //c.r = random(15, 20);
   c.pos.set(x - width_half, y - height_half);
   circles.push(c);
 });
 
+// delete circle when hovered over circle and right mouse clicked on it
 window.addEventListener('contextmenu', e => {
   e.preventDefault();
   let { x, y } = e;
@@ -78,7 +82,7 @@ class CircleBody {
     this._vel = vel.copy();
     this._acc = acc.copy();
     this.r = 20;
-    this.color = floor(random(0, 6)) * 60;
+    this.color = floor(random(0, 12)) * 30; // sets color rgb 0-360
   }
   applyForce(...force) {
     this.acc.add(...force);
