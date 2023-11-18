@@ -1,0 +1,36 @@
+function draw() {
+  stroke('hsl(0, 0%, 100%)');
+  rect(bounds.l, bounds.t, bounds.w, bounds.h);
+
+  if (circles.length === 0) {
+    return;
+  }
+
+  //circles.sort((a, b) => a.color - b.color); //sorts all values from small to big
+
+  ctx.beginPath();
+  /*let currentColor = circles[0].color;
+  fill(`hsl(${currentColor}, 100%, 50%)`);*/
+  circles.forEach(c => {
+    /*if (c.color !== currentColor) {
+      ctx.fill();
+      ctx.beginPath();
+      currentColor = c.color;
+      fill(`hsl(0, 100%, 50%)`); //${currentColor}
+    }*/
+    ctx.fill();
+    ctx.beginPath();
+    img = new Image()
+    img.addEventListener('load', function(e) {
+    ctx.fillStyle = ctx.createPattern(this, 'no-repeat') 
+    ctx.fill();
+    }, true);
+    img.src="https://upload.wikimedia.org/wikipedia/commons/7/79/Face-smile.svg"
+    c.draw();
+    c.calcUpdate();
+  });
+  ctx.fill();
+  circles.forEach(c => {
+    c.update();
+  });
+}

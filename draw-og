@@ -1,0 +1,28 @@
+function draw() {
+  stroke('hsl(0, 0%, 100%)');
+  rect(bounds.l, bounds.t, bounds.w, bounds.h);
+
+  if (circles.length === 0) {
+    return;
+  }
+
+  circles.sort((a, b) => a.color - b.color); //sorts all values from small to big
+
+  ctx.beginPath();
+  let currentColor = circles[0].color;
+  fill(`hsl(${currentColor}, 100%, 50%)`);
+  circles.forEach(c => {
+    if (c.color !== currentColor) {
+      ctx.fill();
+      ctx.beginPath();
+      currentColor = c.color;
+      fill(`hsl(0, 100%, 50%)`); //${currentColor}
+    }
+    c.draw();
+    c.calcUpdate();
+  });
+  ctx.fill();
+  circles.forEach(c => {
+    c.update();
+  });
+}

@@ -4,10 +4,14 @@ let bounds = {
   r: 200,
   b: 200,
   l: -200,
-  strength: 0.1 };
+  strength: 0.1
+};
 
 bounds.w = abs(bounds.l - bounds.r);
 bounds.h = abs(bounds.t - bounds.b);
+
+var im = new Image();
+im.src = "https://upload.wikimedia.org/wikipedia/commons/7/79/Face-smile.svg";
 
 
 // On Loading first Balls start in Center with some force
@@ -15,7 +19,7 @@ function setup() {
   for (let i = 0; i < 5; i++) {
     let c = new CircleBody();
     c.pos.set(Vector.random2D(true, 50));  // random starting position 250 away from center
-    c.r = 25; //random(15, 20);     //random Circle radius
+    c.r = 30; //random(15, 20);     //random Circle radius
     //c.applyForce(Vector.random2D()); //intizial push
     circles.push(c);  // don't know
   }
@@ -27,7 +31,7 @@ window.addEventListener('click', ({ x, y }) => {
     return;
   }
   let c = new CircleBody();
-  //c.r = random(15, 20);
+  c.r = 30; //random(15, 20);
   c.pos.set(x - width_half, y - height_half);
   circles.push(c);
 });
@@ -51,18 +55,22 @@ function draw() {
     return;
   }
 
-  circles.sort((a, b) => a.color - b.color);
-
   ctx.beginPath();
-  let currentColor = circles[0].color;
-  fill(`hsl(${currentColor}, 100%, 50%)`);
   circles.forEach(c => {
-    if (c.color !== currentColor) {
-      ctx.fill();
-      ctx.beginPath();
+
+    ctx.fill();
+    ctx.beginPath();
       currentColor = c.color;
-      fill(`hsl(${currentColor}, 100%, 50%)`);
-    }
+      fill(`hsl(${currentColor}, 100%, 50%)`); //
+    //ctx.clip();
+    
+    ctx.beginPath();
+    
+    im.addEventListener('load', function (e) {
+      ctx.fillStyle(ctx.createPattern(this, 'repeat'));
+      ctx.fill(); //${currentColor
+      
+    }, true);
     c.draw();
     c.calcUpdate();
   });
@@ -72,6 +80,7 @@ function draw() {
   });
 }
 
+// Circle creation attribute values
 class CircleBody {
   constructor() {
     let pos = createVector();
@@ -83,6 +92,7 @@ class CircleBody {
     this._acc = acc.copy();
     this.r = 20;
     this.color = floor(random(0, 12)) * 30; // sets color rgb 0-360
+    this.img = im;
   }
   applyForce(...force) {
     this.acc.add(...force);
@@ -110,15 +120,15 @@ class CircleBody {
     if (pos.x - r < bounds.l) {
       this.applyForce(bounds.strength, 0);
     } else
-    if (pos.x + r > bounds.r) {
-      this.applyForce(-bounds.strength, 0);
-    }
+      if (pos.x + r > bounds.r) {
+        this.applyForce(-bounds.strength, 0);
+      }
     if (pos.y - r < bounds.t) {
       this.applyForce(0, bounds.strength);
     } else
-    if (pos.y + r > bounds.b) {
-      this.applyForce(0, -bounds.strength);
-    }
+      if (pos.y + r > bounds.b) {
+        this.applyForce(0, -bounds.strength);
+      }
     vel.add(acc).mult(0.98);
     acc.set(0, 0);
     pos.add(vel);
@@ -127,4 +137,5 @@ class CircleBody {
     let { x, y } = this.pos;
     ctx.moveTo(x + this.r, y);
     circle(x, y, this.r, false);
-  }}
+  }
+}

@@ -18,6 +18,8 @@ The BaseCode comes from https://codepen.io/Alca/pen/gGPzYr.
 
 #### Replace color with Image
 https://www.w3schools.com/tags/canvas_fillstyle.asp
+https://www.html5canvastutorials.com/tutorials/html5-canvas-image-size/
+
     '''var im = new Image();
     im.src = "https://upload.wikimedia.org/wikipedia/commons/7/79/Face-smile.svg";
     ctx.drawImage(im, 0, 0);'''
