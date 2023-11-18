@@ -60,17 +60,20 @@ function draw() {
 
     ctx.fill();
     ctx.beginPath();
-      currentColor = c.color;
-      fill(`hsl(${currentColor}, 100%, 50%)`); //
+    currentColor = c.color;
+    fill(`hsl(${currentColor}, 100%, 50%)`); // uses the set color to fill the circle
+    
+    ctx.closePath();
     //ctx.clip();
-    
-    ctx.beginPath();
-    
+
     im.addEventListener('load', function (e) {
-      ctx.fillStyle(ctx.createPattern(this, 'repeat'));
-      ctx.fill(); //${currentColor
-      
+      //ctx.fillStyle(ctx.createPattern(this, 'repeat'));
+      //fill(); //${currentColor
+      ctx.drawImage(this);
+
     }, true);
+
+
     c.draw();
     c.calcUpdate();
   });
