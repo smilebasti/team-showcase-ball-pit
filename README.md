@@ -17,8 +17,11 @@ The BaseCode comes from https://codepen.io/Alca/pen/gGPzYr.
 
 
 #### Replace color with Image
+currently pictures are fixed in the Background and not moving with the ball
+
 https://www.w3schools.com/tags/canvas_fillstyle.asp
 https://www.html5canvastutorials.com/tutorials/html5-canvas-image-size/
+https://stackoverflow.com/questions/4276048/html5-canvas-fill-circle-with-image?rq=3
 
     '''var im = new Image();
     im.src = "https://upload.wikimedia.org/wikipedia/commons/7/79/Face-smile.svg";

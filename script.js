@@ -6,13 +6,12 @@ let bounds = {
   l: -200,
   strength: 0.1
 };
+const taus = Math.PI * 2;
 
 bounds.w = abs(bounds.l - bounds.r);
 bounds.h = abs(bounds.t - bounds.b);
 
 var im = new Image();
-im.src = "https://upload.wikimedia.org/wikipedia/commons/7/79/Face-smile.svg";
-
 
 // On Loading first Balls start in Center with some force
 function setup() {
@@ -48,8 +47,12 @@ window.addEventListener('contextmenu', e => {
 });
 
 function draw() {
-  stroke('hsl(0, 0%, 100%)');
-  rect(bounds.l, bounds.t, bounds.w, bounds.h);
+  //draws box
+  ctx.strokeStyle= 'hsl(0, 0%, 100%)';
+  ctx.beginPath();
+  ctx.rect(bounds.l, bounds.t, bounds.w, bounds.h);
+  ctx.stroke();
+  
 
   if (circles.length === 0) {
     return;
@@ -58,23 +61,25 @@ function draw() {
   ctx.beginPath();
   circles.forEach(c => {
 
-    ctx.fill();
+    /*ctx.fill();
     ctx.beginPath();
     currentColor = c.color;
-    fill(`hsl(${currentColor}, 100%, 50%)`); // uses the set color to fill the circle
+    ctx.fillStyle = `hsl(${currentColor}, 100%, 50%)`; // uses the set color to fill the circle
+    */
     
-    ctx.closePath();
-    //ctx.clip();
-
+    c.draw();  //draws the circle
+    
+    
     im.addEventListener('load', function (e) {
-      //ctx.fillStyle(ctx.createPattern(this, 'repeat'));
-      //fill(); //${currentColor
-      ctx.drawImage(this);
-
+      ctx.beginPath();
+      ctx.fillStyle = ctx.createPattern(this, 'repeat'); //no-
+      ctx.fill(); //${currentColor
+      //ctx.drawImage(this, c.pos.x, c.pos.y);
+      //ctx.closePath();
     }, true);
-
-
-    c.draw();
+    im.src = "./Face-smile.png";
+    
+    
     c.calcUpdate();
   });
   ctx.fill();
@@ -139,6 +144,8 @@ class CircleBody {
   draw() {
     let { x, y } = this.pos;
     ctx.moveTo(x + this.r, y);
-    circle(x, y, this.r, false);
+    ctx.arc(x, y, this.r, 0, taus);
+    
+    
   }
 }
